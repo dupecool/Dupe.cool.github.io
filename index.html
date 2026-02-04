@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steal A Brainrot | The Ultimate Tool</title>
+    <meta name="description" content="Steal A Brainrot is the most advanced dupeing tool for the next generation of gamers. Get it now!">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617; /* Slate 950 */
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tile {
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: background-color 0.8s ease-out, transform 0.5s ease-out;
+        }
+
+        .tile:hover {
+            transition-duration: 0s;
+            transform: translate(-2px, -2px);
+            z-index: 10;
+        }
+
+        /* Tile Color Patterns inspired by fishstrap */
+        .tile:nth-child(2n):hover { background-color: #22d3ee; } /* cyan-400 */
+        .tile:nth-child(3n):hover { background-color: #818cf8; } /* indigo-400 */
+        .tile:nth-child(5n):hover { background-color: #f472b6; } /* pink-400 */
+        .tile:nth-child(7n):hover { background-color: #34d399; } /* emerald-400 */
+        .tile:nth-child(11n):hover { background-color: #fbbf24; } /* amber-400 */
+
+        /* Custom glow effect */
+        .glow-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .glow-button:hover {
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.5); /* Cyan 400 */
+            transform: translateY(-2px);
+        }
+
+        .brainrot-text {
+            background: linear-gradient(to right, #22d3ee, #818cf8, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen">
+
+    <!-- Tile Grid Background -->
+    <div id="tile-grid" class="fixed inset-0 grid overflow-hidden pointer-events-auto">
+        <!-- Tiles will be generated here by JS -->
+    </div>
+
+    <!-- Main Content Overlay -->
+    <main class="relative z-20 flex items-center justify-center min-h-screen p-4 pointer-events-none">
+        <div class="glass max-w-lg w-full rounded-2xl p-8 text-center pointer-events-auto transform transition-all duration-500 hover:scale-[1.02]">
+            <div class="mb-6 inline-flex p-4 rounded-full bg-cyan-500/10 text-cyan-400">
+                <i data-lucide="brain" class="w-12 h-12"></i>
+            </div>
+
+            <h1 class="text-4xl md:text-5xl font-black mb-4 tracking-tight">
+                STEAL A <span class="brainrot-text">BRAINROT</span>
+            </h1>
+
+            <p class="text-slate-400 text-lg mb-8 leading-relaxed">
+                The most advanced dupeing tool for the brainrotted generation. Faster, safer, and more Sigma than anything else.
+            </p>
+
+            <div class="flex flex-col gap-4">
+                <a href="#" class="glow-button bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-4 px-8 rounded-xl flex items-center justify-center gap-2 text-xl transition-all">
+                    <i data-lucide="download" class="w-6 h-6"></i>
+                    Download Now
+                </a>
+
+                <div class="flex gap-4">
+                    <a href="#" class="flex-1 glass hover:bg-white/5 py-3 px-6 rounded-xl flex items-center justify-center gap-2 font-semibold transition-all">
+                        <i data-lucide="message-square" class="w-5 h-5"></i>
+                        Discord
+                    </a>
+                    <a href="#" class="flex-1 glass hover:bg-white/5 py-3 px-6 rounded-xl flex items-center justify-center gap-2 font-semibold transition-all">
+                        <i data-lucide="github" class="w-5 h-5"></i>
+                        Source
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-8 border-t border-white/10 grid grid-cols-2 gap-4 text-sm text-slate-500">
+                <div class="flex items-center justify-center gap-2">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-cyan-500"></i>
+                    Undetected
+                </div>
+                <div class="flex items-center justify-center gap-2">
+                    <i data-lucide="zap" class="w-4 h-4 text-yellow-400"></i>
+                    Ultra Fast
+                </div>
+                <div class="flex items-center justify-center gap-2">
+                    <i data-lucide="users" class="w-4 h-4 text-indigo-400"></i>
+                    50k+ Users
+                </div>
+                <div class="flex items-center justify-center gap-2">
+                    <i data-lucide="cpu" class="w-4 h-4 text-pink-500"></i>
+                    Low CPU Use
+                </div>
+            </div>
+        </div>
+
+        <footer class="absolute bottom-4 left-0 right-0 text-center text-slate-600 text-xs pointer-events-none">
+            <p>&copy; 2026 Steal A Brainrot. Not affiliated with Roblox Corporation.</p>
+        </footer>
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Tile Grid Logic
+        const grid = document.getElementById('tile-grid');
+
+        function createGrid() {
+            grid.innerHTML = '';
+
+            const tileSize = 60; // Increased size slightly for better performance
+            const columns = Math.ceil(window.innerWidth / tileSize);
+            const rows = Math.ceil(window.innerHeight / tileSize);
+
+            grid.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+
+            const totalTiles = columns * rows;
+
+            // Limit total tiles to prevent lag on very large screens
+            const maxTiles = 2000;
+            const finalCount = Math.min(totalTiles, maxTiles);
+
+            const fragment = document.createDocumentFragment();
+            for (let i = 0; i < finalCount; i++) {
+                const tile = document.createElement('div');
+                tile.classList.add('tile');
+                fragment.appendChild(tile);
+            }
+            grid.appendChild(fragment);
+        }
+
+        window.addEventListener('resize', createGrid);
+        createGrid();
+    </script>
+</body>
+</html>
