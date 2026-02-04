@@ -31,8 +31,21 @@
 
         .tile:hover {
             transition-duration: 0s;
-            transform: translate(-2px, -2px);
+            transform: scale(1.1);
             z-index: 10;
+        }
+
+        .mouse-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.1) 0%, rgba(34, 211, 238, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 5;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.5s ease;
+            opacity: 0;
         }
 
         /* Tile Color Patterns inspired by fishstrap */
@@ -50,8 +63,17 @@
         }
 
         .glow-button:hover {
-            box-shadow: 0 0 20px rgba(34, 211, 238, 0.5); /* Cyan 400 */
-            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(34, 211, 238, 0.6); /* Cyan 400 */
+            transform: translateY(-2px) scale(1.02);
+            filter: brightness(1.1);
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(0.98); }
+        }
+        .pulse {
+            animation: pulse-soft 2s infinite ease-in-out;
         }
 
         .brainrot-text {
@@ -63,6 +85,8 @@
     </style>
 </head>
 <body class="relative min-h-screen">
+
+    <div id="mouse-glow" class="mouse-glow"></div>
 
     <!-- Tile Grid Background -->
     <div id="tile-grid" class="fixed inset-0 grid overflow-hidden pointer-events-auto">
@@ -103,8 +127,8 @@
             </div>
 
             <div class="mt-8 pt-8 border-t border-white/10 grid grid-cols-2 gap-4 text-sm text-slate-500">
-                <div class="flex items-center justify-center gap-2">
-                    <i data-lucide="shield-check" class="w-4 h-4 text-cyan-500"></i>
+                <div class="flex items-center justify-center gap-2 pulse text-cyan-400 font-medium">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
                     Undetected
                 </div>
                 <div class="flex items-center justify-center gap-2">
@@ -160,6 +184,19 @@
 
         window.addEventListener('resize', createGrid);
         createGrid();
+
+        // Mouse Glow Logic
+        const mouseGlow = document.getElementById('mouse-glow');
+
+        window.addEventListener('mousemove', (e) => {
+            mouseGlow.style.left = `${e.clientX}px`;
+            mouseGlow.style.top = `${e.clientY}px`;
+            mouseGlow.style.opacity = '1';
+        });
+
+        window.addEventListener('mouseleave', () => {
+            mouseGlow.style.opacity = '0';
+        });
     </script>
 </body>
 </html>
