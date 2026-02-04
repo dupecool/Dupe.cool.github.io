@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download | Steal A Brainrot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tile {
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: background-color 0.8s ease-out, transform 0.5s ease-out;
+        }
+
+        .tile:hover {
+            transition-duration: 0s;
+            transform: translate(-2px, -2px);
+            z-index: 10;
+        }
+
+        .tile:nth-child(2n):hover { background-color: #22d3ee; }
+        .tile:nth-child(3n):hover { background-color: #818cf8; }
+        .tile:nth-child(5n):hover { background-color: #f472b6; }
+        .tile:nth-child(7n):hover { background-color: #34d399; }
+        .tile:nth-child(11n):hover { background-color: #fbbf24; }
+
+        .glow-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .glow-button:hover {
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .brainrot-text {
+            background: linear-gradient(to right, #22d3ee, #818cf8, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen">
+
+    <div id="tile-grid" class="fixed inset-0 grid overflow-hidden pointer-events-auto"></div>
+
+    <main class="relative z-20 flex items-center justify-center min-h-screen p-4 pointer-events-none">
+        <div class="glass max-w-lg w-full rounded-2xl p-8 text-center pointer-events-auto transform transition-all duration-500">
+            <a href="index.html" class="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition-colors group">
+                <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+                Back to Home
+            </a>
+
+            <h1 class="text-3xl font-black mb-2 tracking-tight">
+                CHOOSE YOUR <span class="brainrot-text">PLATFORM</span>
+            </h1>
+            <p class="text-slate-400 mb-8">Select your operating system to begin the installation.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="https://github.com/StealABrainrot/tool/releases/latest/download/StealABrainrot.exe" download class="glow-button bg-white/5 hover:bg-white/10 border border-white/10 py-6 px-4 rounded-xl flex flex-col items-center gap-3 transition-all">
+                    <div class="p-3 rounded-full bg-blue-500/10 text-blue-400">
+                        <i data-lucide="monitor" class="w-8 h-8"></i>
+                    </div>
+                    <span class="font-bold text-lg">Windows</span>
+                    <span class="text-xs text-slate-500">.exe installer</span>
+                </a>
+
+                <a href="https://github.com/StealABrainrot/tool/releases/latest/download/StealABrainrot.apk" download class="glow-button bg-white/5 hover:bg-white/10 border border-white/10 py-6 px-4 rounded-xl flex flex-col items-center gap-3 transition-all">
+                    <div class="p-3 rounded-full bg-green-500/10 text-green-400">
+                        <i data-lucide="smartphone" class="w-8 h-8"></i>
+                    </div>
+                    <span class="font-bold text-lg">Android</span>
+                    <span class="text-xs text-slate-500">.apk package</span>
+                </a>
+            </div>
+
+            <p class="mt-8 text-xs text-slate-500 italic">
+                By downloading, you agree to our terms of service and acknowledge that you are a certified Sigma.
+            </p>
+        </div>
+
+        <footer class="absolute bottom-4 left-0 right-0 text-center text-slate-600 text-xs pointer-events-none">
+            <p>&copy; 2026 Steal A Brainrot. Not affiliated with Roblox Corporation.</p>
+        </footer>
+    </main>
+
+    <script>
+        lucide.createIcons();
+        const grid = document.getElementById('tile-grid');
+        function createGrid() {
+            grid.innerHTML = '';
+            const tileSize = 60;
+            const columns = Math.ceil(window.innerWidth / tileSize);
+            const rows = Math.ceil(window.innerHeight / tileSize);
+            grid.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+            const totalTiles = columns * rows;
+            const maxTiles = 2000;
+            const finalCount = Math.min(totalTiles, maxTiles);
+            const fragment = document.createDocumentFragment();
+            for (let i = 0; i < finalCount; i++) {
+                const tile = document.createElement('div');
+                tile.classList.add('tile');
+                fragment.appendChild(tile);
+            }
+            grid.appendChild(fragment);
+        }
+        window.addEventListener('resize', createGrid);
+        createGrid();
+    </script>
+</body>
+</html>
