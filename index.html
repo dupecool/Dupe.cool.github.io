@@ -26,21 +26,21 @@
 
         .tile {
             border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: background-color 0.8s ease-out, transform 0.5s ease-out;
+            transition: background-color 1.5s ease-out, transform 0.5s ease-out;
         }
 
         .tile:hover {
             transition-duration: 0s;
-            transform: translate(-2px, -2px);
+            transform: scale(1.05);
             z-index: 10;
         }
 
         /* Tile Color Patterns inspired by fishstrap */
-        .tile:nth-child(2n):hover { background-color: #22d3ee; } /* cyan-400 */
-        .tile:nth-child(3n):hover { background-color: #818cf8; } /* indigo-400 */
-        .tile:nth-child(5n):hover { background-color: #f472b6; } /* pink-400 */
-        .tile:nth-child(7n):hover { background-color: #34d399; } /* emerald-400 */
-        .tile:nth-child(11n):hover { background-color: #fbbf24; } /* amber-400 */
+        .tile:nth-child(2n):hover { background-color: rgba(34, 211, 238, 0.4); } /* cyan-400 */
+        .tile:nth-child(3n):hover { background-color: rgba(129, 140, 248, 0.4); } /* indigo-400 */
+        .tile:nth-child(5n):hover { background-color: rgba(244, 114, 182, 0.4); } /* pink-400 */
+        .tile:nth-child(7n):hover { background-color: rgba(52, 211, 153, 0.4); } /* emerald-400 */
+        .tile:nth-child(11n):hover { background-color: rgba(251, 191, 36, 0.4); } /* amber-400 */
 
         /* Custom glow effect */
         .glow-button {
@@ -60,9 +60,48 @@
             -webkit-text-fill-color: transparent;
             font-weight: 800;
         }
+
+        #cursor-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 5;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.5s ease;
+            opacity: 0;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.33); }
+            80%, 100% { opacity: 0; }
+        }
+
+        .status-pulse {
+            position: relative;
+        }
+
+        .status-pulse::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background-color: #22d3ee;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #22d3ee;
+            animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
     </style>
 </head>
 <body class="relative min-h-screen">
+
+    <div id="cursor-glow"></div>
 
     <!-- Tile Grid Background -->
     <div id="tile-grid" class="fixed inset-0 grid overflow-hidden pointer-events-auto">
@@ -70,60 +109,104 @@
     </div>
 
     <!-- Main Content Overlay -->
-    <main class="relative z-20 flex items-center justify-center min-h-screen p-4 pointer-events-none">
-        <div class="glass max-w-lg w-full rounded-2xl p-8 text-center pointer-events-auto transform transition-all duration-500 hover:scale-[1.02]">
-            <div class="mb-6 inline-flex p-4 rounded-full bg-cyan-500/10 text-cyan-400">
-                <i data-lucide="brain" class="w-12 h-12"></i>
-            </div>
+    <main class="relative z-20 flex flex-col items-center min-h-screen p-4 pointer-events-none">
+        <!-- Spacer to center the main card while allowing content below -->
+        <div class="flex-grow flex items-center justify-center w-full">
+            <div class="glass max-w-lg w-full rounded-2xl p-8 text-center pointer-events-auto transform transition-all duration-500 hover:scale-[1.01] relative overflow-hidden">
 
-            <h1 class="text-4xl md:text-5xl font-black mb-4 tracking-tight">
-                STEAL A <span class="brainrot-text">BRAINROT</span>
-            </h1>
+                <div class="absolute top-4 right-4 flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20">
+                    <span class="status-pulse ml-1 text-[10px] font-bold text-cyan-400 tracking-wider uppercase">Undetected</span>
+                </div>
 
-            <p class="text-slate-400 text-lg mb-8 leading-relaxed">
-                The most advanced duping tool for the brainrotted generation. Faster, safer, and more Sigma than anything else.
-            </p>
+                <div class="mb-6 inline-flex p-4 rounded-full bg-cyan-500/10 text-cyan-400 mt-4">
+                    <i data-lucide="brain" class="w-12 h-12"></i>
+                </div>
 
-            <div class="flex flex-col gap-4">
-                <a href="download.html" class="glow-button bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-4 px-8 rounded-xl flex items-center justify-center gap-2 text-xl transition-all">
-                    <i data-lucide="download" class="w-6 h-6"></i>
-                    Download Now
-                </a>
+                <h1 class="text-4xl md:text-5xl font-black mb-4 tracking-tight">
+                    STEAL A <span class="brainrot-text">BRAINROT</span>
+                </h1>
 
-                <div class="flex gap-4">
-                    <a href="https://discord.gg/TW3kq9hpqq" class="flex-1 glass hover:bg-white/5 py-3 px-6 rounded-xl flex items-center justify-center gap-2 font-semibold transition-all">
-                        <i data-lucide="message-square" class="w-5 h-5"></i>
-                        Discord
+                <p class="text-slate-400 text-lg mb-8 leading-relaxed">
+                    The most advanced duping tool for the brainrotted generation. Faster, safer, and more Sigma than anything else.
+                </p>
+
+                <div class="flex flex-col gap-4">
+                    <a href="download.html" class="glow-button bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-4 px-8 rounded-xl flex items-center justify-center gap-2 text-xl transition-all">
+                        <i data-lucide="download" class="w-6 h-6"></i>
+                        Download Now
                     </a>
-                    <a href="#" class="flex-1 glass hover:bg-white/5 py-3 px-6 rounded-xl flex items-center justify-center gap-2 font-semibold transition-all">
-                        <i data-lucide="github" class="w-5 h-5"></i>
-                        Source
-                    </a>
-                </div>
-            </div>
 
-            <div class="mt-8 pt-8 border-t border-white/10 grid grid-cols-2 gap-4 text-sm text-slate-500">
-                <div class="flex items-center justify-center gap-2">
-                    <i data-lucide="shield-check" class="w-4 h-4 text-cyan-500"></i>
-                    Undetected
+                    <div class="flex gap-4">
+                        <a href="https://discord.gg/TW3kq9hpqq" class="flex-1 glass hover:bg-white/5 py-3 px-6 rounded-xl flex items-center justify-center gap-2 font-semibold transition-all">
+                            <i data-lucide="message-square" class="w-5 h-5"></i>
+                            Discord
+                        </a>
+                        <a href="#" class="flex-1 glass hover:bg-white/5 py-3 px-6 rounded-xl flex items-center justify-center gap-2 font-semibold transition-all">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                            Source
+                        </a>
+                    </div>
                 </div>
-                <div class="flex items-center justify-center gap-2">
-                    <i data-lucide="zap" class="w-4 h-4 text-yellow-400"></i>
-                    Ultra Fast
-                </div>
-                <div class="flex items-center justify-center gap-2">
-                    <i data-lucide="users" class="w-4 h-4 text-indigo-400"></i>
-                    50k+ Users
-                </div>
-                <div class="flex items-center justify-center gap-2">
-                    <i data-lucide="cpu" class="w-4 h-4 text-pink-500"></i>
-                    Low CPU Use
+
+                <div class="mt-8 pt-8 border-t border-white/10 grid grid-cols-2 gap-4 text-sm text-slate-500">
+                    <div class="flex items-center justify-center gap-2">
+                        <i data-lucide="zap" class="w-4 h-4 text-yellow-400"></i>
+                        Ultra Fast
+                    </div>
+                    <div class="flex items-center justify-center gap-2">
+                        <i data-lucide="users" class="w-4 h-4 text-indigo-400"></i>
+                        50k+ Users
+                    </div>
+                    <div class="flex items-center justify-center gap-2">
+                        <i data-lucide="cpu" class="w-4 h-4 text-pink-500"></i>
+                        Low CPU Use
+                    </div>
+                    <div class="flex items-center justify-center gap-2">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+                        Anti-Ban
+                    </div>
                 </div>
             </div>
         </div>
 
-        <footer class="absolute bottom-4 left-0 right-0 text-center text-slate-600 text-xs pointer-events-none">
-            <p>&copy; 2026 Steal A Brainrot. Not affiliated with Roblox Corporation.</p>
+        <!-- Scroll down indicator -->
+        <div class="mt-8 mb-12 animate-bounce text-slate-500 pointer-events-auto cursor-pointer" onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})">
+            <i data-lucide="chevron-down" class="w-8 h-8"></i>
+        </div>
+
+        <!-- Features Section -->
+        <section class="w-full max-w-6xl px-4 py-20 pointer-events-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">UNMATCHED <span class="brainrot-text">FEATURES</span></h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass p-8 rounded-2xl border border-white/5 hover:border-cyan-500/50 transition-colors group">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="zap" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Insane Speed</h3>
+                    <p class="text-slate-400">Our proprietary injection method ensures you're duping faster than a speedrunning Sigma on G-Fuel.</p>
+                </div>
+
+                <div class="glass p-8 rounded-2xl border border-white/5 hover:border-indigo-500/50 transition-colors group">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="shield" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Maximum Security</h3>
+                    <p class="text-slate-400">Stay undetected with our Kernel-level bypass. The mods won't even know what hit them.</p>
+                </div>
+
+                <div class="glass p-8 rounded-2xl border border-white/5 hover:border-pink-500/50 transition-colors group">
+                    <div class="w-12 h-12 rounded-xl bg-pink-500/10 text-pink-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="trending-up" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Sigma Level: 100</h3>
+                    <p class="text-slate-400">Boost your street cred in the brainrot community. Includes exclusive 'Mewing' emotes.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="w-full py-8 text-center text-slate-600 text-xs border-t border-white/5">
+            <p>&copy; 2026 Steal A Brainrot. Not affiliated with Roblox Corporation. Stay Sigma.</p>
         </footer>
     </main>
 
@@ -133,20 +216,19 @@
 
         // Tile Grid Logic
         const grid = document.getElementById('tile-grid');
+        const cursorGlow = document.getElementById('cursor-glow');
 
         function createGrid() {
             grid.innerHTML = '';
 
-            const tileSize = 60; // Increased size slightly for better performance
+            const tileSize = 60;
             const columns = Math.ceil(window.innerWidth / tileSize);
             const rows = Math.ceil(window.innerHeight / tileSize);
 
             grid.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
 
             const totalTiles = columns * rows;
-
-            // Limit total tiles to prevent lag on very large screens
-            const maxTiles = 2000;
+            const maxTiles = 2500;
             const finalCount = Math.min(totalTiles, maxTiles);
 
             const fragment = document.createDocumentFragment();
@@ -160,6 +242,20 @@
 
         window.addEventListener('resize', createGrid);
         createGrid();
+
+        // Mouse Interactivity
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+
+            cursorGlow.style.left = `${x}px`;
+            cursorGlow.style.top = `${y}px`;
+            cursorGlow.style.opacity = '1';
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursorGlow.style.opacity = '0';
+        });
     </script>
 </body>
 </html>

@@ -25,20 +25,20 @@
 
         .tile {
             border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: background-color 0.8s ease-out, transform 0.5s ease-out;
+            transition: background-color 1.5s ease-out, transform 0.5s ease-out;
         }
 
         .tile:hover {
             transition-duration: 0s;
-            transform: translate(-2px, -2px);
+            transform: scale(1.05);
             z-index: 10;
         }
 
-        .tile:nth-child(2n):hover { background-color: #22d3ee; }
-        .tile:nth-child(3n):hover { background-color: #818cf8; }
-        .tile:nth-child(5n):hover { background-color: #f472b6; }
-        .tile:nth-child(7n):hover { background-color: #34d399; }
-        .tile:nth-child(11n):hover { background-color: #fbbf24; }
+        .tile:nth-child(2n):hover { background-color: rgba(34, 211, 238, 0.4); }
+        .tile:nth-child(3n):hover { background-color: rgba(129, 140, 248, 0.4); }
+        .tile:nth-child(5n):hover { background-color: rgba(244, 114, 182, 0.4); }
+        .tile:nth-child(7n):hover { background-color: rgba(52, 211, 153, 0.4); }
+        .tile:nth-child(11n):hover { background-color: rgba(251, 191, 36, 0.4); }
 
         .brainrot-text {
             background: linear-gradient(to right, #22d3ee, #818cf8, #f472b6);
@@ -57,10 +57,34 @@
             box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
             transform: translateY(-2px);
         }
+
+        #cursor-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 5;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.5s ease;
+            opacity: 0;
+        }
+
+        @keyframes progress-pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; filter: brightness(1.2); box-shadow: 0 0 15px rgba(34, 211, 238, 0.4); }
+            100% { opacity: 0.8; }
+        }
+        .progress-animate {
+            animation: progress-pulse 2s infinite ease-in-out;
+        }
     </style>
 </head>
 <body class="relative min-h-screen">
 
+    <div id="cursor-glow"></div>
     <div id="tile-grid" class="fixed inset-0 grid overflow-hidden pointer-events-auto"></div>
 
     <main class="relative z-20 flex items-center justify-center min-h-screen p-4 pointer-events-none">
@@ -82,11 +106,11 @@
             <div class="flex flex-col gap-4">
                 <div class="glass p-6 rounded-xl border border-white/5 bg-white/5">
                     <div class="flex items-center justify-between mb-4">
-                        <span class="text-sm font-semibold text-slate-300">Optimization Progress</span>
+                        <span class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Optimization Progress</span>
                         <span class="text-xs font-mono text-cyan-400">69%</span>
                     </div>
-                    <div class="w-full bg-slate-800 rounded-full h-2">
-                        <div class="bg-gradient-to-r from-cyan-500 to-indigo-500 h-2 rounded-full" style="width: 69%"></div>
+                    <div class="w-full bg-slate-800 rounded-full h-3 overflow-hidden">
+                        <div class="bg-gradient-to-r from-cyan-500 via-indigo-500 to-pink-500 h-full rounded-full progress-animate" style="width: 69%"></div>
                     </div>
                 </div>
 
@@ -109,6 +133,8 @@
     <script>
         lucide.createIcons();
         const grid = document.getElementById('tile-grid');
+        const cursorGlow = document.getElementById('cursor-glow');
+
         function createGrid() {
             grid.innerHTML = '';
             const tileSize = 60;
@@ -116,7 +142,7 @@
             const rows = Math.ceil(window.innerHeight / tileSize);
             grid.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
             const totalTiles = columns * rows;
-            const maxTiles = 2000;
+            const maxTiles = 2500;
             const finalCount = Math.min(totalTiles, maxTiles);
             const fragment = document.createDocumentFragment();
             for (let i = 0; i < finalCount; i++) {
@@ -128,6 +154,16 @@
         }
         window.addEventListener('resize', createGrid);
         createGrid();
+
+        document.addEventListener('mousemove', (e) => {
+            cursorGlow.style.left = `${e.clientX}px`;
+            cursorGlow.style.top = `${e.clientY}px`;
+            cursorGlow.style.opacity = '1';
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursorGlow.style.opacity = '0';
+        });
     </script>
 </body>
 </html>
