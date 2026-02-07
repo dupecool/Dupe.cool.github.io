@@ -25,7 +25,7 @@
 
         .tile {
             border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: background-color 0.8s ease-out, transform 0.5s ease-out;
+            transition: background-color 1.5s ease-out, transform 0.5s ease-out;
         }
 
         .tile:hover {
@@ -57,9 +57,38 @@
             -webkit-text-fill-color: transparent;
             font-weight: 800;
         }
+
+        #tile-grid {
+            --mouse-x: 0px;
+            --mouse-y: 0px;
+        }
+
+        #tile-grid::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(34, 211, 238, 0.1), transparent 40%);
+            z-index: 5;
+            pointer-events: none;
+        }
     </style>
 </head>
-<body class="relative min-h-screen">
+<body class="relative min-h-screen pt-20">
+
+    <!-- Navigation Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 p-4 pointer-events-none">
+        <nav class="max-w-5xl mx-auto glass rounded-2xl px-6 py-3 flex items-center justify-between pointer-events-auto">
+            <a href="index.html" class="flex items-center gap-2 font-black text-xl tracking-tighter hover:opacity-80 transition-opacity pointer-events-auto">
+                <i data-lucide="brain" class="w-6 h-6 text-cyan-400"></i>
+                <span>STEAL A <span class="brainrot-text">BRAINROT</span></span>
+            </a>
+            <div class="flex items-center gap-6 pointer-events-auto">
+                <a href="index.html" class="text-sm font-semibold hover:text-cyan-400 transition-colors">Home</a>
+                <a href="download.html" class="text-sm font-semibold hover:text-cyan-400 transition-colors">Download</a>
+                <a href="https://discord.gg/TW3kq9hpqq" target="_blank" class="text-sm font-semibold bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-4 py-2 rounded-lg transition-all">Discord</a>
+            </div>
+        </nav>
+    </header>
 
     <div id="tile-grid" class="fixed inset-0 grid overflow-hidden pointer-events-auto"></div>
 
@@ -125,6 +154,11 @@
         }
         window.addEventListener('resize', createGrid);
         createGrid();
+
+        window.addEventListener('mousemove', (e) => {
+            grid.style.setProperty('--mouse-x', `${e.clientX}px`);
+            grid.style.setProperty('--mouse-y', `${e.clientY}px`);
+        });
     </script>
 </body>
 </html>

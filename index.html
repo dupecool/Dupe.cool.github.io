@@ -26,7 +26,7 @@
 
         .tile {
             border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: background-color 0.8s ease-out, transform 0.5s ease-out;
+            transition: background-color 1.5s ease-out, transform 0.5s ease-out;
         }
 
         .tile:hover {
@@ -60,9 +60,38 @@
             -webkit-text-fill-color: transparent;
             font-weight: 800;
         }
+
+        #tile-grid {
+            --mouse-x: 0px;
+            --mouse-y: 0px;
+        }
+
+        #tile-grid::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(34, 211, 238, 0.1), transparent 40%);
+            z-index: 5;
+            pointer-events: none;
+        }
     </style>
 </head>
-<body class="relative min-h-screen">
+<body class="relative min-h-screen pt-20">
+
+    <!-- Navigation Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 p-4 pointer-events-none">
+        <nav class="max-w-5xl mx-auto glass rounded-2xl px-6 py-3 flex items-center justify-between pointer-events-auto">
+            <a href="index.html" class="flex items-center gap-2 font-black text-xl tracking-tighter hover:opacity-80 transition-opacity pointer-events-auto">
+                <i data-lucide="brain" class="w-6 h-6 text-cyan-400"></i>
+                <span>STEAL A <span class="brainrot-text">BRAINROT</span></span>
+            </a>
+            <div class="flex items-center gap-6 pointer-events-auto">
+                <a href="index.html" class="text-sm font-semibold hover:text-cyan-400 transition-colors">Home</a>
+                <a href="download.html" class="text-sm font-semibold hover:text-cyan-400 transition-colors">Download</a>
+                <a href="https://discord.gg/TW3kq9hpqq" target="_blank" class="text-sm font-semibold bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-4 py-2 rounded-lg transition-all">Discord</a>
+            </div>
+        </nav>
+    </header>
 
     <!-- Tile Grid Background -->
     <div id="tile-grid" class="fixed inset-0 grid overflow-hidden pointer-events-auto">
@@ -74,6 +103,16 @@
         <div class="glass max-w-lg w-full rounded-2xl p-8 text-center pointer-events-auto transform transition-all duration-500 hover:scale-[1.02]">
             <div class="mb-6 inline-flex p-4 rounded-full bg-cyan-500/10 text-cyan-400">
                 <i data-lucide="brain" class="w-12 h-12"></i>
+            </div>
+
+            <div class="flex justify-center mb-4">
+                <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    Status: Undetected
+                </div>
             </div>
 
             <h1 class="text-4xl md:text-5xl font-black mb-4 tracking-tight">
@@ -102,22 +141,42 @@
                 </div>
             </div>
 
-            <div class="mt-8 pt-8 border-t border-white/10 grid grid-cols-2 gap-4 text-sm text-slate-500">
-                <div class="flex items-center justify-center gap-2">
-                    <i data-lucide="shield-check" class="w-4 h-4 text-cyan-500"></i>
-                    Undetected
+            <div class="mt-8 pt-8 border-t border-white/10 grid grid-cols-2 gap-6 text-left">
+                <div class="flex items-start gap-3">
+                    <div class="p-2 rounded-lg bg-cyan-500/10 text-cyan-400">
+                        <i data-lucide="shield-check" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-200 text-sm">Undetected</h3>
+                        <p class="text-xs text-slate-500">Advanced bypass tech.</p>
+                    </div>
                 </div>
-                <div class="flex items-center justify-center gap-2">
-                    <i data-lucide="zap" class="w-4 h-4 text-yellow-400"></i>
-                    Ultra Fast
+                <div class="flex items-start gap-3">
+                    <div class="p-2 rounded-lg bg-yellow-400/10 text-yellow-400">
+                        <i data-lucide="zap" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-200 text-sm">Ultra Fast</h3>
+                        <p class="text-xs text-slate-500">Optimized for speed.</p>
+                    </div>
                 </div>
-                <div class="flex items-center justify-center gap-2">
-                    <i data-lucide="users" class="w-4 h-4 text-indigo-400"></i>
-                    50k+ Users
+                <div class="flex items-start gap-3">
+                    <div class="p-2 rounded-lg bg-indigo-400/10 text-indigo-400">
+                        <i data-lucide="trending-up" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-200 text-sm">Sigma Level</h3>
+                        <p class="text-xs text-slate-500">Over 9000 brainrot.</p>
+                    </div>
                 </div>
-                <div class="flex items-center justify-center gap-2">
-                    <i data-lucide="cpu" class="w-4 h-4 text-pink-500"></i>
-                    Low CPU Use
+                <div class="flex items-start gap-3">
+                    <div class="p-2 rounded-lg bg-pink-500/10 text-pink-500">
+                        <i data-lucide="cpu" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-200 text-sm">Low Impact</h3>
+                        <p class="text-xs text-slate-500">Minimal CPU usage.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -160,6 +219,11 @@
 
         window.addEventListener('resize', createGrid);
         createGrid();
+
+        window.addEventListener('mousemove', (e) => {
+            grid.style.setProperty('--mouse-x', `${e.clientX}px`);
+            grid.style.setProperty('--mouse-y', `${e.clientY}px`);
+        });
     </script>
 </body>
 </html>
