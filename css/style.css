@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #020617; /* Slate 950 */
+    color: #f8fafc;
+    overflow-x: hidden;
+}
+
+.glass {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tile {
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: background-color 1.5s ease-out, transform 0.5s ease-out;
+}
+
+.tile:hover {
+    transition-duration: 0s;
+    transform: translate(-2px, -2px);
+    z-index: 10;
+}
+
+/* Tile Color Patterns inspired by fishstrap */
+.tile:nth-child(2n):hover { background-color: #22d3ee; } /* cyan-400 */
+.tile:nth-child(3n):hover { background-color: #818cf8; } /* indigo-400 */
+.tile:nth-child(5n):hover { background-color: #f472b6; } /* pink-400 */
+.tile:nth-child(7n):hover { background-color: #34d399; } /* emerald-400 */
+.tile:nth-child(11n):hover { background-color: #fbbf24; } /* amber-400 */
+
+/* Custom glow effect */
+.glow-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.glow-button:hover {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.5); /* Cyan 400 */
+    transform: translateY(-2px);
+}
+
+.brainrot-text {
+    background: linear-gradient(to right, #22d3ee, #818cf8, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+@keyframes pulse-glow {
+    0% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(34, 211, 238, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0); }
+}
+
+.animate-pulse-glow {
+    animation: pulse-glow 2s infinite;
+}
