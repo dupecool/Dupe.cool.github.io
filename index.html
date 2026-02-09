@@ -7,73 +7,45 @@
     <meta name="description" content="Steal A Brainrot is the most advanced duping tool for the next generation of gamers. Get it now!">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/style.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #020617; /* Slate 950 */
-            color: #f8fafc;
-            overflow-x: hidden;
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        .glass {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .tile {
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: background-color 0.8s ease-out, transform 0.5s ease-out;
-        }
-
-        .tile:hover {
-            transition-duration: 0s;
-            transform: translate(-2px, -2px);
-            z-index: 10;
-        }
-
-        /* Tile Color Patterns inspired by fishstrap */
-        .tile:nth-child(2n):hover { background-color: #22d3ee; } /* cyan-400 */
-        .tile:nth-child(3n):hover { background-color: #818cf8; } /* indigo-400 */
-        .tile:nth-child(5n):hover { background-color: #f472b6; } /* pink-400 */
-        .tile:nth-child(7n):hover { background-color: #34d399; } /* emerald-400 */
-        .tile:nth-child(11n):hover { background-color: #fbbf24; } /* amber-400 */
-
-        /* Custom glow effect */
-        .glow-button {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .glow-button:hover {
-            box-shadow: 0 0 20px rgba(34, 211, 238, 0.5); /* Cyan 400 */
-            transform: translateY(-2px);
-        }
-
-        .brainrot-text {
-            background: linear-gradient(to right, #22d3ee, #818cf8, #f472b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
         }
     </style>
 </head>
 <body class="relative min-h-screen">
 
+    <header class="pointer-events-none">
+        <div class="nav-container glass rounded-full px-6 py-3 mt-4 pointer-events-auto">
+            <div class="flex items-center gap-2">
+                <i data-lucide="brain" class="w-6 h-6 text-cyan-400"></i>
+                <span class="font-bold tracking-tighter text-xl">BRAIN<span class="text-cyan-400">ROT</span></span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="download.html" class="nav-link">Download</a>
+                <a href="https://discord.gg/TW3kq9hpqq" class="nav-link">Discord</a>
+            </nav>
+        </div>
+    </header>
+
     <!-- Tile Grid Background -->
-    <div id="tile-grid" class="fixed inset-0 grid overflow-hidden pointer-events-auto">
-        <!-- Tiles will be generated here by JS -->
-    </div>
+    <div id="tile-grid"></div>
 
     <!-- Main Content Overlay -->
-    <main class="relative z-20 flex items-center justify-center min-h-screen p-4 pointer-events-none">
-        <div class="glass max-w-lg w-full rounded-2xl p-8 text-center pointer-events-auto transform transition-all duration-500 hover:scale-[1.02]">
-            <div class="mb-6 inline-flex p-4 rounded-full bg-cyan-500/10 text-cyan-400">
-                <i data-lucide="brain" class="w-12 h-12"></i>
+    <main class="relative z-20 flex flex-col items-center justify-center min-h-screen p-4 pt-24 pointer-events-none">
+
+        <!-- Hero Card -->
+        <div class="glass max-w-lg w-full rounded-2xl p-8 text-center pointer-events-auto transform transition-all duration-500 hover:scale-[1.01] mb-8">
+            <div class="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-bold uppercase tracking-widest pulse">
+                <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                Status: Undetected
             </div>
 
             <h1 class="text-4xl md:text-5xl font-black mb-4 tracking-tight">
@@ -101,65 +73,38 @@
                     </a>
                 </div>
             </div>
+        </div>
 
-            <div class="mt-8 pt-8 border-t border-white/10 grid grid-cols-2 gap-4 text-sm text-slate-500">
-                <div class="flex items-center justify-center gap-2">
-                    <i data-lucide="shield-check" class="w-4 h-4 text-cyan-500"></i>
-                    Undetected
+        <!-- Features Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl w-full pointer-events-auto">
+            <div class="glass p-6 rounded-2xl border border-white/5 flex flex-col items-center text-center">
+                <div class="p-3 rounded-xl bg-yellow-500/10 text-yellow-400 mb-4">
+                    <i data-lucide="zap" class="w-8 h-8"></i>
                 </div>
-                <div class="flex items-center justify-center gap-2">
-                    <i data-lucide="zap" class="w-4 h-4 text-yellow-400"></i>
-                    Ultra Fast
+                <h3 class="font-bold text-xl mb-2">Speed</h3>
+                <p class="text-slate-400 text-sm">Instant execution with zero latency. Fastest in the market.</p>
+            </div>
+            <div class="glass p-6 rounded-2xl border border-white/5 flex flex-col items-center text-center">
+                <div class="p-3 rounded-xl bg-green-500/10 text-green-400 mb-4">
+                    <i data-lucide="shield" class="w-8 h-8"></i>
                 </div>
-                <div class="flex items-center justify-center gap-2">
-                    <i data-lucide="users" class="w-4 h-4 text-indigo-400"></i>
-                    50k+ Users
+                <h3 class="font-bold text-xl mb-2">Security</h3>
+                <p class="text-slate-400 text-sm">Advanced encryption and anti-cheat bypass technologies.</p>
+            </div>
+            <div class="glass p-6 rounded-2xl border border-white/5 flex flex-col items-center text-center">
+                <div class="p-3 rounded-xl bg-purple-500/10 text-purple-400 mb-4">
+                    <i data-lucide="crown" class="w-8 h-8"></i>
                 </div>
-                <div class="flex items-center justify-center gap-2">
-                    <i data-lucide="cpu" class="w-4 h-4 text-pink-500"></i>
-                    Low CPU Use
-                </div>
+                <h3 class="font-bold text-xl mb-2">Sigma Level</h3>
+                <p class="text-slate-400 text-sm">Engineered for the ultimate Alpha experience. Pure dominance.</p>
             </div>
         </div>
 
-        <footer class="absolute bottom-4 left-0 right-0 text-center text-slate-600 text-xs pointer-events-none">
+        <footer class="mt-12 text-slate-600 text-xs pointer-events-none pb-8">
             <p>&copy; 2026 Steal A Brainrot. Not affiliated with Roblox Corporation.</p>
         </footer>
     </main>
 
-    <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-
-        // Tile Grid Logic
-        const grid = document.getElementById('tile-grid');
-
-        function createGrid() {
-            grid.innerHTML = '';
-
-            const tileSize = 60; // Increased size slightly for better performance
-            const columns = Math.ceil(window.innerWidth / tileSize);
-            const rows = Math.ceil(window.innerHeight / tileSize);
-
-            grid.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
-
-            const totalTiles = columns * rows;
-
-            // Limit total tiles to prevent lag on very large screens
-            const maxTiles = 2000;
-            const finalCount = Math.min(totalTiles, maxTiles);
-
-            const fragment = document.createDocumentFragment();
-            for (let i = 0; i < finalCount; i++) {
-                const tile = document.createElement('div');
-                tile.classList.add('tile');
-                fragment.appendChild(tile);
-            }
-            grid.appendChild(fragment);
-        }
-
-        window.addEventListener('resize', createGrid);
-        createGrid();
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
