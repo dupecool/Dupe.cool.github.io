@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #020617; /* Slate 950 */
+    color: #f8fafc;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.glass {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Tile Grid Background */
+#tile-grid {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    overflow: hidden;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+.tile {
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: background-color 1.5s ease-out;
+}
+
+.tile.active {
+    transition: background-color 0s;
+}
+
+/* Tile Color Patterns inspired by fishstrap */
+.tile:nth-child(2n).active { background-color: rgba(34, 211, 238, 0.2); } /* cyan-400 */
+.tile:nth-child(3n).active { background-color: rgba(129, 140, 248, 0.2); } /* indigo-400 */
+.tile:nth-child(5n).active { background-color: rgba(244, 114, 182, 0.2); } /* pink-400 */
+.tile:nth-child(7n).active { background-color: rgba(52, 211, 153, 0.2); } /* emerald-400 */
+.tile:nth-child(11n).active { background-color: rgba(251, 191, 36, 0.2); } /* amber-400 */
+
+/* Custom glow effect */
+.glow-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.glow-button:hover {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.5); /* Cyan 400 */
+    transform: translateY(-2px);
+}
+
+.brainrot-text {
+    background: linear-gradient(to right, #22d3ee, #818cf8, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+/* Radial Glow following mouse */
+#mouse-glow {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.15) 0%, rgba(34, 211, 238, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+}
+
+/* Navigation Header */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 1rem 2rem;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: #94a3b8;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #f8fafc;
+}
+
+.nav-link.active {
+    color: #22d3ee;
+}
