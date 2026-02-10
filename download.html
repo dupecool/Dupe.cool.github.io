@@ -6,60 +6,23 @@
     <title>Download | Steal A Brainrot</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #020617;
-            color: #f8fafc;
-            overflow-x: hidden;
-        }
-
-        .glass {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .tile {
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: background-color 0.8s ease-out, transform 0.5s ease-out;
-        }
-
-        .tile:hover {
-            transition-duration: 0s;
-            transform: translate(-2px, -2px);
-            z-index: 10;
-        }
-
-        .tile:nth-child(2n):hover { background-color: #22d3ee; }
-        .tile:nth-child(3n):hover { background-color: #818cf8; }
-        .tile:nth-child(5n):hover { background-color: #f472b6; }
-        .tile:nth-child(7n):hover { background-color: #34d399; }
-        .tile:nth-child(11n):hover { background-color: #fbbf24; }
-
-        .glow-button {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .glow-button:hover {
-            box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .brainrot-text {
-            background: linear-gradient(to right, #22d3ee, #818cf8, #f472b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="relative min-h-screen">
+
+    <!-- Navigation Header -->
+    <nav class="fixed top-0 left-0 right-0 z-50 p-4 pointer-events-none">
+        <div class="max-w-7xl mx-auto flex justify-between items-center glass px-6 py-4 rounded-2xl pointer-events-auto">
+            <a href="index.html" class="flex items-center gap-2 font-black text-xl tracking-tighter">
+                <i data-lucide="brain" class="w-6 h-6 text-cyan-500"></i>
+                <span>STEAL A <span class="brainrot-text">BRAINROT</span></span>
+            </a>
+            <div class="flex gap-6 items-center">
+                <a href="index.html" class="text-sm font-semibold hover:text-cyan-400 transition-colors">Home</a>
+                <a href="download.html" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-4 py-2 rounded-lg text-sm font-bold transition-all">Download</a>
+            </div>
+        </div>
+    </nav>
 
     <div id="tile-grid" class="fixed inset-0 grid overflow-hidden pointer-events-auto"></div>
 
@@ -103,28 +66,6 @@
         </footer>
     </main>
 
-    <script>
-        lucide.createIcons();
-        const grid = document.getElementById('tile-grid');
-        function createGrid() {
-            grid.innerHTML = '';
-            const tileSize = 60;
-            const columns = Math.ceil(window.innerWidth / tileSize);
-            const rows = Math.ceil(window.innerHeight / tileSize);
-            grid.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
-            const totalTiles = columns * rows;
-            const maxTiles = 2000;
-            const finalCount = Math.min(totalTiles, maxTiles);
-            const fragment = document.createDocumentFragment();
-            for (let i = 0; i < finalCount; i++) {
-                const tile = document.createElement('div');
-                tile.classList.add('tile');
-                fragment.appendChild(tile);
-            }
-            grid.appendChild(fragment);
-        }
-        window.addEventListener('resize', createGrid);
-        createGrid();
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
