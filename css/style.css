@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #020617; /* Slate 950 */
+    color: #f8fafc;
+    overflow-x: hidden;
+    min-h-screen;
+}
+
+.glass {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#tile-grid {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: auto;
+    background: radial-gradient(
+        circle at var(--mouse-x) var(--mouse-y),
+        rgba(34, 211, 238, 0.15) 0%,
+        transparent 80%
+    );
+}
+
+.tile {
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: background-color 1.5s ease-out;
+}
+
+.tile:hover {
+    transition-duration: 0s;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Dynamic color patterns on hover */
+.tile:nth-child(2n):hover { background-color: rgba(34, 211, 238, 0.4); } /* cyan-400 */
+.tile:nth-child(3n):hover { background-color: rgba(129, 140, 248, 0.4); } /* indigo-400 */
+.tile:nth-child(5n):hover { background-color: rgba(244, 114, 182, 0.4); } /* pink-400 */
+.tile:nth-child(7n):hover { background-color: rgba(52, 211, 153, 0.4); } /* emerald-400 */
+
+.glow-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.glow-button:hover {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+    transform: translateY(-2px);
+}
+
+.brainrot-text {
+    background: linear-gradient(to right, #22d3ee, #818cf8, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(34, 211, 238, 0.1);
+    color: #22d3ee;
+    border: 1px solid rgba(34, 211, 238, 0.2);
+}
+
+.status-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: #22d3ee;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 211, 238, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 211, 238, 0); }
+}
+
+nav a {
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #22d3ee;
+}
