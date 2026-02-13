@@ -7,73 +7,46 @@
     <meta name="description" content="Steal A Brainrot is the most advanced duping tool for the next generation of gamers. Get it now!">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #020617; /* Slate 950 */
-            color: #f8fafc;
-            overflow-x: hidden;
-        }
-
-        .glass {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .tile {
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: background-color 0.8s ease-out, transform 0.5s ease-out;
-        }
-
-        .tile:hover {
-            transition-duration: 0s;
-            transform: translate(-2px, -2px);
-            z-index: 10;
-        }
-
-        /* Tile Color Patterns inspired by fishstrap */
-        .tile:nth-child(2n):hover { background-color: #22d3ee; } /* cyan-400 */
-        .tile:nth-child(3n):hover { background-color: #818cf8; } /* indigo-400 */
-        .tile:nth-child(5n):hover { background-color: #f472b6; } /* pink-400 */
-        .tile:nth-child(7n):hover { background-color: #34d399; } /* emerald-400 */
-        .tile:nth-child(11n):hover { background-color: #fbbf24; } /* amber-400 */
-
-        /* Custom glow effect */
-        .glow-button {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .glow-button:hover {
-            box-shadow: 0 0 20px rgba(34, 211, 238, 0.5); /* Cyan 400 */
-            transform: translateY(-2px);
-        }
-
-        .brainrot-text {
-            background: linear-gradient(to right, #22d3ee, #818cf8, #f472b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="relative min-h-screen">
 
     <!-- Tile Grid Background -->
-    <div id="tile-grid" class="fixed inset-0 grid overflow-hidden pointer-events-auto">
-        <!-- Tiles will be generated here by JS -->
-    </div>
+    <div id="tile-grid" class="fixed inset-0 overflow-hidden pointer-events-auto"></div>
+
+    <!-- Navigation Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 p-4 pointer-events-none">
+        <nav class="max-w-6xl mx-auto glass-nav rounded-2xl px-6 py-3 flex items-center justify-between pointer-events-auto">
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="p-2 rounded-lg bg-cyan-500/10 text-cyan-400 group-hover:bg-cyan-500/20 transition-all">
+                    <i data-lucide="brain" class="w-6 h-6"></i>
+                </div>
+                <span class="font-bold tracking-tight text-lg">STEAL A <span class="brainrot-text">BRAINROT</span></span>
+            </a>
+
+            <div class="flex items-center gap-6">
+                <a href="index.html" class="text-slate-200 hover:text-white transition-colors font-medium text-sm flex items-center gap-2">
+                    <i data-lucide="home" class="w-4 h-4"></i>
+                    Home
+                </a>
+                <a href="download.html" class="text-slate-400 hover:text-white transition-colors font-medium text-sm flex items-center gap-2">
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                    Download
+                </a>
+                <a href="https://discord.gg/TW3kq9hpqq" target="_blank" class="text-slate-400 hover:text-white transition-colors font-medium text-sm flex items-center gap-2">
+                    <i data-lucide="message-square" class="w-4 h-4"></i>
+                    Discord
+                </a>
+            </div>
+        </nav>
+    </header>
 
     <!-- Main Content Overlay -->
     <main class="relative z-20 flex items-center justify-center min-h-screen p-4 pointer-events-none">
-        <div class="glass max-w-lg w-full rounded-2xl p-8 text-center pointer-events-auto transform transition-all duration-500 hover:scale-[1.02]">
-            <div class="mb-6 inline-flex p-4 rounded-full bg-cyan-500/10 text-cyan-400">
-                <i data-lucide="brain" class="w-12 h-12"></i>
+        <div class="glass max-w-lg w-full rounded-2xl p-8 text-center pointer-events-auto transform transition-all duration-500 hover:scale-[1.01]">
+            <div class="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold uppercase tracking-wider animate-pulse-soft">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                Status: Undetected
             </div>
 
             <h1 class="text-4xl md:text-5xl font-black mb-4 tracking-tight">
@@ -127,39 +100,6 @@
         </footer>
     </main>
 
-    <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-
-        // Tile Grid Logic
-        const grid = document.getElementById('tile-grid');
-
-        function createGrid() {
-            grid.innerHTML = '';
-
-            const tileSize = 60; // Increased size slightly for better performance
-            const columns = Math.ceil(window.innerWidth / tileSize);
-            const rows = Math.ceil(window.innerHeight / tileSize);
-
-            grid.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
-
-            const totalTiles = columns * rows;
-
-            // Limit total tiles to prevent lag on very large screens
-            const maxTiles = 2000;
-            const finalCount = Math.min(totalTiles, maxTiles);
-
-            const fragment = document.createDocumentFragment();
-            for (let i = 0; i < finalCount; i++) {
-                const tile = document.createElement('div');
-                tile.classList.add('tile');
-                fragment.appendChild(tile);
-            }
-            grid.appendChild(fragment);
-        }
-
-        window.addEventListener('resize', createGrid);
-        createGrid();
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>

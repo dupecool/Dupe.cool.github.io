@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #020617; /* Slate 950 */
+    color: #f8fafc;
+    overflow-x: hidden;
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* Glassmorphism */
+.glass {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-nav {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Tile Grid Background */
+#tile-grid {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    gap: 1px;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.tile {
+    position: relative;
+    background-color: #020617;
+}
+
+.tile::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        600px circle at calc(var(--mouse-x) - var(--tile-left)) calc(var(--mouse-y) - var(--tile-top)),
+        rgba(255, 255, 255, 0.08),
+        transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 500ms;
+}
+
+#tile-grid:hover .tile::before {
+    opacity: 1;
+}
+
+/* Specific Hover colors inspired by fishstrap */
+.tile:hover {
+    transition-duration: 0s;
+    background-color: rgba(255, 255, 255, 0.05);
+    z-index: 10;
+}
+
+.tile:nth-child(2n):hover { border: 1px solid rgba(34, 211, 238, 0.3); } /* cyan */
+.tile:nth-child(3n):hover { border: 1px solid rgba(129, 140, 248, 0.3); } /* indigo */
+.tile:nth-child(5n):hover { border: 1px solid rgba(244, 114, 182, 0.3); } /* pink */
+
+/* Typography & Components */
+.brainrot-text {
+    background: linear-gradient(to right, #22d3ee, #818cf8, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+.glow-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.glow-button:hover {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+    transform: translateY(-2px);
+}
+
+.nav-link {
+    color: #94a3b8; /* slate-400 */
+    transition: color 0.2s;
+    font-weight: 500;
+    font-size: 0.875rem; /* 14px */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-link:hover {
+    color: #ffffff;
+}
+
+/* Animations */
+@keyframes pulse-soft {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(0.95); }
+}
+
+.animate-pulse-soft {
+    animation: pulse-soft 2s infinite ease-in-out;
+}
+
+/* Utils */
+.pointer-events-none { pointer-events: none; }
+.pointer-events-auto { pointer-events: auto; }
